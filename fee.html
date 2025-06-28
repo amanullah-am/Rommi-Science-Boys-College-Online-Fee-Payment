@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Fee Voucher System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google" content="notranslate">
+    <link rel="shortcut icon" href="K:LOGO/logo.jpg.jpg" type="image/x-icon">
+    <link rel="icon" href="/Adminfavicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="/Content/js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/Content/lib/bootstrap/css/bootstrap2.min.css">
+
+
+    <link rel="stylesheet" href="/Content/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Content/css/main-3.min.css">
+    <link rel="stylesheet" href="/Content/lib/metismenu/metisMenu.min.css">
+    <link rel="stylesheet" href="/Content/css/style-switcher.css">
+    <script src="/Content/lib/less/less-1.7.5.min.js"></script>
+    <script src="/Content/lib/modernizr/modernizr.min.js"></script>
+    <link rel="stylesheet" href="/Content/css/datepicker3.min.css">
+    <script src="/Content/js/bootstrap-datepicker.min.js"></script>
+    <link href="/Content/css/toastr.min.css" rel="stylesheet" />
+    <script src="/Content/js/toastr.min.js"></script>
+    <script src="/Scripts/jquery.validate.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .receipt {
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .receipt::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9 0%, #8b5cf6 100%);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .tab-btn.active {
+            color: #0ea5e9;
+            border-bottom: 2px solid #0ea5e9;
+        }
+        .image {
+            margin-left: 2cm;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <img class="image" src="K:/LOGO/Untitled (2).jpg" alt="Romi College Official Logo">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <button class="tab-btn active py-2 px-4 font-medium" data-tab="create">
+                <i class="fas fa-file-invoice-dollar mr-2"></i> Create Voucher
+            </button>
+            <button class="tab-btn py-2 px-4 font-medium" data-tab="search">
+                <i class="fas fa-search mr-2"></i> Search Vouchers
+            </button>
+            <button class="tab-btn py-2 px-4 font-medium" data-tab="view">
+                <i class="fas fa-list-alt mr-2"></i> View All
+            </button>
+            <button class="tab-btn py-2 px-4 font-medium" data-tab="total">
+                <i class="fas fa-money-check-alt mr-2"></i> Monthly Total
+            </button>
+        </div>
+        
+        <!-- Create Voucher Tab -->
+        <div id="create" class="tab-content active">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Student Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Student Name *</label>
+                        <input type="text" id="studentName" class="w-full px-4 py-2 border rounded-md" placeholder="Enter full name">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Father Name *</label>
+                        <input type="text" id="fatherName" class="w-full px-4 py-2 border rounded-md" placeholder="Father's name">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Class/Grade *</label>
+                        <input type="text" id="studentClass" class="w-full px-4 py-2 border rounded-md" placeholder="10th Grade">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Roll Number</label>
+                        <input type="text" id="rollNumber" class="w-full px-4 py-2 border rounded-md" placeholder="Roll number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Fee Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Course/Program *</label>
+                        <input type="text" id="course" class="w-full px-4 py-2 border rounded-md" placeholder="Computer Science">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Monthly Fee (PKR) *</label>
+                        <input type="number" id="monthlyFee" class="w-full px-4 py-2 border rounded-md" placeholder="Amount">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Payment Period *</label>
+                        <select id="paymentPeriod" class="w-full px-4 py-2 border rounded-md">
+                            <option value="month">Monthly</option>
+                            <option value="quarter">Quarterly (3 Months)</option>
+                            <option value="semester">Semester (6 Months)</option>
+                            <option value="year">Yearly (12 Months)</option>
+                            <option value="twoYears">Two Years (24 Months)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Due Date *</label>
+                        <input type="date" id="dueDate" class="w-full px-4 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Receiver Phone Number *</label>
+                        <input type="text" id="receiverPhone" class="w-full px-4 py-2 border rounded-md" placeholder="Receiver's phone number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <button id="clearBtn" class="px-6 py-2 bg-gray-200 rounded-md">Clear</button>
+                <button id="generateBtn" class="px-6 py-2 bg-indigo-600 text-white rounded-md">Generate Voucher</button>
+            </div>
+
+            <!-- Preview Section -->
+            <div id="previewSection" class="mt-8 hidden">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Voucher Preview</h2>
+                <div id="voucherPreview" class="receipt p-6 rounded-lg max-w-2xl mx-auto">
+                    <div class="text-center mb-6">
+                      <h1>Romi Science College</h1>
+                    </div>
+                    
+                    <div class="border-b border-gray-300 pb-2 mb-4">
+                        <div class="flex justify-between py-2">
+                            <span class="font-semibold">Student:</span>
+                            <span id="previewStudentName">-</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="font-semibold">Course:</span>
+                            <span id="previewCourse">-</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="font-semibold">Due Date:</span>
+                            <span id="previewDueDate">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-b border-gray-300 pb-2 mb-4">
+                        <h4 class="font-bold text-center mb-2">FEE VOUCHER</h4>
+                        <div class="flex justify-between py-2">
+                            <span class="font-semibold">Monthly Fee:</span>
+                            <span id="previewMonthlyFee">- PKR</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4" id="paymentHistory">
+                        <h4 class="font-bold mb-2">Payment History:</h4>
+                        <div id="previewPaymentHistory">
+                            <p class="text-center text-gray-500">No payment history yet</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-6">
+                    <button id="saveBtn" class="px-6 py-2 bg-green-600 text-white rounded-md">Save Voucher</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Search Vouchers Tab -->
+        <div id="search" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Search Student Vouchers</h2>
+                <div class="flex mb-6">
+                    <input type="text" id="searchName" class="flex-1 px-4 py-2 border rounded-l-md" placeholder="Enter student name">
+                    <button id="searchBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-r-md">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div id="searchResults" class="hidden">
+                    <div id="resultsContainer" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- View All Vouchers Tab -->
+        <div id="view" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">All Fee Vouchers</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-left">Receipt #</th>
+                                <th class="px-6 py-3 text-left">Student Name</th>
+                                <th class="px-6 py-3 text-left">Class</th>
+                                <th class="px-6 py-3 text-left">Course</th>
+                                <th class="px-6 py-3 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vouchersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Total Tab -->
+        <div id="total" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Monthly Total Payments</h2>
+                <div class="flex mb-6">
+                    <input type="month" id="paymentMonth" class="flex-1 px-4 py-2 border rounded-l-md">
+                    <button id="calculateTotalBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-r-md">
+                        Calculate Total
+                    </button>
+                </div>
+                <div id="totalResult" class="text-lg font-semibold"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 class="text-xl font-semibold mb-4">Record Payment</h3>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Student Name</label>
+                <input type="text" id="paymentStudentName" class="w-full px-4 py-2 border rounded-md" placeholder="Enter student's name">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Payment Date</label>
+                <input type="date" id="paymentDate" class="w-full px-4 py-2 border rounded-md">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Amount Paid (PKR)</label>
+                <input type="number" id="paymentAmount" class="w-full px-4 py-2 border rounded-md">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Received By</label>
+                <input type="text" id="receivedBy" class="w-full px-4 py-2 border rounded-md" placeholder="Receiver's Name">
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button id="cancelPaymentBtn" class="px-4 py-2 bg-gray-200">Cancel</button>
+                <button id="confirmPaymentBtn" class="px-4 py-2 bg-green-600 text-white">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// Initialize data storage
+if (!localStorage.getItem('feeVouchers')) {
+    localStorage.setItem('feeVouchers', JSON.stringify([]));
+}
+
+// DOM elements
+const tabs = {
+    create: document.getElementById('create'),
+    search: document.getElementById('search'),
+    view: document.getElementById('view'),
+    total: document.getElementById('total')
+};
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        
+        // Update active tab
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        btn.classList.add('active');
+        tabs[tabId].classList.add('active');
+        
+        // Refresh view if needed
+        if (tabId === 'view') renderVouchersTable();
+    });
+});
+
+// Voucher generation
+document.getElementById('generateBtn').addEventListener('click', generateVoucher);
+
+function generateVoucher() {
+    // Get form values
+    const studentName = document.getElementById('studentName').value;
+    const course = document.getElementById('course').value; // Get course value
+    const dueDate = document.getElementById('dueDate').value; // Get due date value
+    const monthlyFee = document.getElementById('monthlyFee').value; // Get monthly fee value
+    const receiverPhone = document.getElementById('receiverPhone').value; // Get receiver phone number
+
+    // Validation
+    if (!studentName || !course || !dueDate || !monthlyFee || !receiverPhone) {
+        alert('Please fill all required fields');
+        return;
+    }
+    
+    // Update preview
+    document.getElementById('previewStudentName').textContent = studentName;
+    document.getElementById('previewCourse').textContent = course; // Update course preview
+    document.getElementById('previewDueDate').textContent = dueDate; // Update due date preview
+    document.getElementById('previewMonthlyFee').textContent = monthlyFee + ' PKR'; // Update monthly fee preview
+
+    document.getElementById('previewSection').classList.remove('hidden');
+}
+
+// Save voucher
+document.getElementById('saveBtn').addEventListener('click', saveVoucher);
+
+function saveVoucher() {
+    let vouchers = JSON.parse(localStorage.getItem('feeVouchers'));
+    const receiptNo = 'VCH' + Date.now().toString().slice(-6);
+    
+    const voucher = {
+        id: Date.now().toString(),
+        receiptNo: receiptNo,
+        studentName: document.getElementById('studentName').value,
+        studentClass: document.getElementById('studentClass').value,
+        course: document.getElementById('course').value,
+        monthlyFee: document.getElementById('monthlyFee').value,
+        dueDate: document.getElementById('dueDate').value,
+        receiverPhone: document.getElementById('receiverPhone').value, // Save receiver phone number
+        payments: []
+    };
+    
+    vouchers.push(voucher);
+    localStorage.setItem('feeVouchers', JSON.stringify(vouchers));
+    
+    alert('Voucher saved successfully!');
+    clearForm();
+}
+
+// Clear form
+document.getElementById('clearBtn').addEventListener('click', clearForm);
+
+function clearForm() {
+    document.getElementById('studentName').value = '';
+    document.getElementById('fatherName').value = '';
+    document.getElementById('studentClass').value = '';
+    document.getElementById('rollNumber').value = '';
+    document.getElementById('course').value = '';
+    document.getElementById('monthlyFee').value = '';
+    document.getElementById('paymentPeriod').value = 'month';
+    document.getElementById('dueDate').value = '';
+    document.getElementById('receiverPhone').value = ''; // Clear receiver phone number
+    document.getElementById('previewSection').classList.add('hidden');
+}
+
+// Search functionality
+document.getElementById('searchBtn').addEventListener('click', searchVouchers);
+
+function searchVouchers() {
+    const searchTerm = document.getElementById('searchName').value.toLowerCase();
+    const vouchers = JSON.parse(localStorage.getItem('feeVouchers'));
+    
+    const results = vouchers.filter(v => 
+        v.studentName.toLowerCase().includes(searchTerm)
+    );
+    
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '';
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<p class="text-center">No results found</p>';
+    } else {
+        results.forEach(voucher => {
+            const voucherElement = document.createElement('div');
+            voucherElement.className = 'bg-white p-4 rounded shadow';
+            voucherElement.innerHTML = `
+                <h3 class="font-semibold">${voucher.studentName}</h3>
+                <p>${voucher.receiptNo} - ${voucher.studentClass}</p>
+                <button class="view-btn mt-2 px-3 py-1 bg-blue-100 text-blue-800 rounded" 
+                        data-id="${voucher.id}">View</button>
+            `;
+            resultsContainer.appendChild(voucherElement);
+        });
+    }
+    
+    document.getElementById('searchResults').classList.remove('hidden');
+}
+
+// Render all vouchers
+function renderVouchersTable() {
+    const vouchers = JSON.parse(localStorage.getItem('feeVouchers'));
+    const tableBody = document.getElementById('vouchersTable');
+    tableBody.innerHTML = '';
+    
+    vouchers.forEach(voucher => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="px-6 py-4">${voucher.receiptNo}</td>
+            <td class="px-6 py-4">${voucher.studentName}</td>
+            <td class="px-6 py-4">${voucher.studentClass}</td>
+            <td class="px-6 py-4">${voucher.course}</td>
+            <td class="px-6 py-4">
+                <button class="view-btn px-2 py-1 bg-blue-100 rounded mr-2" 
+                        data-id="${voucher.id}">View</button>
+                <button class="pay-btn px-2 py-1 bg-green-100 rounded mr-2" 
+                        data-id="${voucher.id}">Pay</button>
+                <button class="delete-btn px-2 py-1 bg-red-100 rounded" 
+                        data-id="${voucher.id}">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    // Add delete functionality
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', deleteVoucher);
+    });
+}
+
+// Delete voucher function
+function deleteVoucher(e) {
+    const voucherId = e.target.getAttribute('data-id');
+    let vouchers = JSON.parse(localStorage.getItem('feeVouchers'));
+    vouchers = vouchers.filter(v => v.id !== voucherId);
+    localStorage.setItem('feeVouchers', JSON.stringify(vouchers));
+    renderVouchersTable(); // Refresh the table
+    alert('Voucher deleted successfully!');
+}
+
+// Payment modal
+let currentVoucherId = null;
+const paymentModal = document.getElementById('paymentModal');
+
+// Open payment modal
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pay-btn')) {
+        currentVoucherId = e.target.getAttribute('data-id');
+        paymentModal.classList.remove('hidden');
+    }
+});
+
+// Close modal
+document.getElementById('cancelPaymentBtn').addEventListener('click', () => {
+    paymentModal.classList.add('hidden');
+});
+
+// Confirm payment
+document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+    const paymentStudentName = document.getElementById('paymentStudentName').value; // Get student's name
+    const paymentDate = document.getElementById('paymentDate').value;
+    const paymentAmount = document.getElementById('paymentAmount').value;
+    const receivedBy = document.getElementById('receivedBy').value;
+
+    if (!paymentStudentName || !paymentDate || !paymentAmount || !receivedBy) {
+        alert('Please fill all fields');
+        return;
+    }
+    
+    let vouchers = JSON.parse(localStorage.getItem('feeVouchers'));
+    const voucherIndex = vouchers.findIndex(v => v.id === currentVoucherId);
+    
+    if (voucherIndex !== -1) {
+        vouchers[voucherIndex].payments.push({
+            date: paymentDate,
+            amount: paymentAmount,
+            receivedBy: receivedBy,
+            studentName: paymentStudentName // Store the student's name with the payment
+        });
+        
+        localStorage.setItem('feeVouchers', JSON.stringify(vouchers));
+        paymentModal.classList.add('hidden');
+        
+        // Refresh views
+        if (tabs.view.classList.contains('active')) renderVouchersTable();
+        alert('Payment recorded successfully!');
+    }
+});
+
+// Monthly total calculation
+document.getElementById('calculateTotalBtn').addEventListener('click', calculateMonthlyTotal);
+
+function calculateMonthlyTotal() {
+    const monthInput = document.getElementById('paymentMonth').value;
+    if (!monthInput) {
+        alert('Please select a month');
+        return;
+    }
+
+    const [year, month] = monthInput.split('-');
+    const vouchers = JSON.parse(localStorage.getItem('feeVouchers'));
+    let totalAmount = 0;
+
+    vouchers.forEach(voucher => {
+        voucher.payments.forEach(payment => {
+            const paymentDate = new Date(payment.date);
+            if (paymentDate.getFullYear() == year && paymentDate.getMonth() + 1 == month) {
+                totalAmount += parseFloat(payment.amount);
+            }
+        });
+    });
+
+    document.getElementById('totalResult').textContent = `Total Amount Paid in ${monthInput}: PKR ${totalAmount}`;
+}
+</script>
+</body>
+</html>
